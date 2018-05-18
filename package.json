@@ -1,0 +1,32 @@
+{
+  "name": "nupnp",
+  "version": "1.0.0",
+  "description": "Discovery broker for IoT devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roccomuso/nupnp.git"
+  },
+  "keywords": [
+    "nupnp",
+    "broker",
+    "iot",
+    "devices",
+    "discovery"
+  ],
+  "author": "Rocco Musolino (@roccomuso)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roccomuso/nupnp/issues"
+  },
+  "homepage": "https://github.com/roccomuso/nupnp#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "keyv": "^3.0.0",
+    "node-fetch": "^2.1.2"
+  }
+}
