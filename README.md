@@ -1,6 +1,6 @@
 # 🤖 nupnp
 
-Discovery broker for IoT devices. 🤖
+Node.js Discovery broker for IoT devices. 🤖
 
 ![screen](screen.png)
 
@@ -24,15 +24,16 @@ http://localhost:8180/api/devices
 * http://www.meethue.com/api/nupnp
 * http://find.z-wave.me
 * http://setup.thinka.eu
+* https://github.com/yene/nupnp
 
 ## Questions
 * Should it filter IP addresses -> just prevent simple loopback error
 * Should port be inside address or separate -> separate makes scripting easier
 * Should the user be able to provide full fledged address?
 
-## TODO
-- [ ] Proxy should be a flag
+## Options
 
+- [x] Trust reverse Proxy
 
 ## Security
 Never allow another IP address to access the data. Remove the entries after 24h. If you use a proxy prevent external access to the API server.
@@ -48,7 +49,8 @@ proxy /api/register localhost:8180 {
 ```
 
 ## License
-[MIT](https://tldrlegal.com/license/mit-license)
+
+MIT
 
 ## Author
 
