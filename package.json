@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/roccomuso/nupnp.git"
   },
+  "engines": {
+    "node": ">=6"
+  },
   "keywords": [
     "nupnp",
     "broker",
