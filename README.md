@@ -16,17 +16,13 @@ Node.js Discovery broker for IoT devices. 🤖
 ```javascript
 const {Server} = require('nupnp')
 
-const PORT = process.env.PORT || 8180
-const ENABLE_PROXY = process.env.ENABLE_PROXY || false
-const VERBOSE = process.env.VERBOSE || true
-
 let server = new Server({
-  port: PORT,
-  verbose: VERBOSE,
-  enableProxy: ENABLE_PROXY,
+  port: 8180,
+  verbose: true,
+  enableProxy: true,
   connectionString: 'sqlite://database.sqlite' // @keyv compatible storage conn. string
 }).listen()
-  .then(() => console.log(`Server listening on port ${PORT} - Trust proxy: ${ENABLE_PROXY}`)).catch(console.error)
+  .then(() => console.log(`Server listening on port 8180 - Trust proxy: true`)).catch(console.error)
 
 ```
 
@@ -37,7 +33,7 @@ From CLI:
 If globally installed, it will use by default in-memory storage.
 Otherwise pick and install the [keyv adapter](https://github.com/lukechilds/keyv#usage) you like the most (We're using [keyv](https://github.com/lukechilds/keyv) as storage layer).
 
-#### client
+#### Client
 
 ```javascript
 const {Client} = require('nupnp')
