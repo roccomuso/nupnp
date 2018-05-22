@@ -1,10 +1,67 @@
-# 🤖 nupnp
+# 🤖 nupnp [![NPM Version](https://img.shields.io/npm/v/nupnp.svg)](https://www.npmjs.com/package/nupnp) ![node](https://img.shields.io/node/v/nupnp.svg) [![Dependency Status](https://david-dm.org/roccomuso/nupnp.png)](https://david-dm.org/roccomuso/nupnp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 
 Node.js Discovery broker for IoT devices. 🤖
 
 ![screen](screen.png)
 
-## API
+## Install
+
+`npm install nupnp` or `npm install -g nupnp`
+
+## Programmatic usage
+
+#### Server
+
+```javascript
+const {Server} = require('nupnp')
+
+const PORT = process.env.PORT || 8180
+const ENABLE_PROXY = process.env.ENABLE_PROXY || false
+const VERBOSE = process.env.VERBOSE || true
+
+let server = new Server({
+  port: PORT,
+  verbose: VERBOSE,
+  enableProxy: ENABLE_PROXY,
+  connectionString: 'sqlite://database.sqlite' // @keyv compatible storage conn. string
+}).listen()
+  .then(() => console.log(`Server listening on port ${PORT} - Trust proxy: ${ENABLE_PROXY}`)).catch(console.error)
+
+```
+
+From CLI:
+
+`PORT=8180 VERBOSE=true ENABLE_PROXY=true nupnp &`
+
+If globally installed, it will use by default in-memory storage.
+Otherwise pick and install the [keyv adapter](https://github.com/lukechilds/keyv#usage) you like the most (We're using [keyv](https://github.com/lukechilds/keyv) as storage layer).
+
+#### client
+
+```javascript
+const {Client} = require('nupnp')
+const os = require('os')
+
+let client = new Client({
+  host: 'http://localhost:8180'
+})
+
+let iface = os.networkInterfaces().wlp2s0 || os.networkInterfaces().eth0
+
+// register a device
+client.register({
+  name: 'MyDevice',
+  address: iface[0].address, // lan ip
+  port: 1234, // optional
+  ttl: null // optional
+}).then(console.log).catch(console.error)
+
+// get devices
+client.getDevices().then(console.log).catch(console.error)
+```
+
+## Server API
 Register device with:
 ```
 curl -H "Content-Type: application/json" -X POST -d '{"name":"Testdevice","address":"192.168.100.151"}' http://localhost:8180/api/register
@@ -12,6 +69,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"name":"Testdevice","addre
 
 Optional parameters:
 * port
+* ttl (in milliseconds)
 
 List device with:
 ```
@@ -26,14 +84,11 @@ http://localhost:8180/api/devices
 * http://setup.thinka.eu
 * https://github.com/yene/nupnp
 
-## Questions
-* Should it filter IP addresses -> just prevent simple loopback error
-* Should port be inside address or separate -> separate makes scripting easier
-* Should the user be able to provide full fledged address?
 
 ## Options
 
 - [x] Trust reverse Proxy
+- [x] Support to IPv4 & IPv6
 
 ## Security
 Never allow another IP address to access the data. Remove the entries after 24h. If you use a proxy prevent external access to the API server.
